@@ -1,14 +1,8 @@
-<?php
-    if (!isset($_SESSION)) {
-        session_start();
-        var_dump($_SESSION);
-    }
-?>
-
+<?php require_once "./DB.php"; ?>
 <!DOCTYPE html>
 <html>
     <body>
-        <label>Nombre de Pokémons : <?php echo sizeof($_SESSION['pkmns']); ?></label>
+        <label>Nombre de Pokémons : <?php echo DB::countPokemon(); ?></label>
         <br/>
         <label>Nombre de Pokémons par type :</label>
         <br/>
@@ -18,10 +12,10 @@
                 <th>Nombre</th>
             </tr>
             <?php
-                foreach ($_SESSION['types'] as $key => $number) {
+                foreach (DB::countTypes() as $type) {
                     echo "<tr>";
-                    echo sprintf("<td>%s</td>", $key);
-                    echo sprintf("<td>%d</td>", $number);
+                    echo sprintf("<td>%s</td>", $type["libelle"]);
+                    echo sprintf("<td>%d</td>", $type["nb"]);
                     echo "</tr>";
                 }
             ?>
@@ -30,8 +24,8 @@
         <?php
             echo sprintf(
                 '<label>Nombre de Pokémons de base : %1$d et d\'évolutions : %2$d</label>',
-                $_SESSION['nbBases'],
-                $_SESSION['nbEvos']
+                DB::countPokemonEvolution(false),
+                DB::countPokemonEvolution(true)
             );
         ?>
     </body>

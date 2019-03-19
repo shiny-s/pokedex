@@ -1,12 +1,11 @@
 <?php
 
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+    require_once "./DB.php";
+
     echo "<ul>";
-    foreach ($_SESSION['pkmns'] as $pokemon) {
-        echo sprintf('<li><a href="./detail.php?pokemon=%1$d">%2$s</a></li>', $pokemon->getId(), $pokemon->getName());
+    foreach (DB::getPokemon() as $pokemon) {
+        echo "<li>";
+        echo sprintf('<a href="./detail.php?pokemon=%1$d">%2$s</a>', $pokemon['id'], $pokemon['nom']);
+        echo "</li>";
     }
     echo "</ul>";
-
-?>
